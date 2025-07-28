@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanduni & Malith's Wedding</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: url('https://via.placeholder.com/1920x1080?text=Romantic+Floral+Background');
+            background-attachment: fixed;
+            background-size: cover;
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .parallax {
+            background: url('https://via.placeholder.com/1920x1080?text=Starry+Night') no-repeat center;
+            background-attachment: fixed;
+            background-size: cover;
+            padding: 50px 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        .header {
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3.5em;
+            color: #d81b60;
+            font-family: 'Great Vibes', cursive;
+            animation: fadeInScale 1s ease-in;
+        }
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 2;
+        }
+        .language-toggle button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #d81b60;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            font-family: 'Arial', sans-serif;
+            font-size: 1em;
+        }
+        .language-toggle button:hover {
+            background: #b01750;
+            transform: scale(1.05);
+        }
+        .countdown, .invitation-details, .timeline, .media-section, .image-section, .map-section {
+            margin: 40px 0;
+        }
+        .countdown h2, .invitation-details h2, .timeline h2, .media-section h2, .image-section h2, .map-section h2 {
+            font-size: 2em;
+            color: #d81b60;
+            animation: fadeInScale 1.5s ease-in;
+        }
+        #countdown {
+            font-size: 1.5em;
+            color: #d81b60;
+        }
+        .timeline-events {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+        .timeline-event {
+            display: flex;
+            align-items: center;
+            background: #f5e1e6;
+            padding: 15px 30px;
+            border-radius: 50px;
+            width: 300px;
+            animation: slideIn 1s ease-in;
+        }
+        .timeline-event i {
+            margin-right: 15px;
+            color: #d81b60;
+        }
+        button {
+            padding: 10px 20px;
+            background: #d81b60;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            font-family: 'Arial', sans-serif;
+            font-size: 1em;
+            margin: 10px 0;
+        }
+        button:hover {
+            background: #b01750;
+            transform: scale(1.05);
+        }
+        .slideshow-container {
+            position: relative;
+            max-width: 600px;
+            margin: auto;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            border-radius: 10px;
+        }
+        .slide.active {
+            display: block;
+            animation: fadeIn 1s ease-in;
+        }
+        .social-share a {
+            margin: 10px;
+            color: #d81b60;
+            font-size: 1.5em;
+            text-decoration: none;
+        }
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f5e1e6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 2s ease-in 2s forwards;
+        }
+        .heart {
+            width: 50px;
+            height: 50px;
+            background: #d81b60;
+            position: relative;
+            transform: rotate(-45deg);
+            animation: pulse 1s infinite;
+        }
+        .heart::before, .heart::after {
+            content: '';
+            width: 50px;
+            height: 50px;
+            background: #d81b60;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart::before {
+            top: -25px;
+            left: 0;
+        }
+        .heart::after {
+            left: 25px;
+            top: 0;
+        }
+        .image-section {
+            position: relative;
+            height: 300px;
+        }
+        .image-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            animation: fadeInScale 1.5s ease-in;
+        }
+        .map-section {
+            height: 400px;
+        }
+        .map-section iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            animation: fadeIn 1.5s ease-in;
+        }
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            width: 50px;
+            height: 50px;
+            background: #d81b60;
+            border-radius: 50%;
+            color: white;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 2;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .scroll-to-top.show {
+            display: flex;
+        }
+        .scroll-to-top:hover {
+            background: #b01750;
+            transform: scale(1.1);
+        }
+        .scroll-to-top i {
+            font-size: 1.5em;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; display: none; }
+        }
+        @keyframes pulse {
+            0% { transform: rotate(-45deg) scale(1); }
+            50% { transform: rotate(-45deg) scale(1.2); }
+            100% { transform: rotate(-45deg) scale(1); }
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .countdown, .invitation-details, .timeline, .media-section, .image-section, .map-section { font-size: 0.9em; }
+            .timeline-event { width: 200px; padding: 10px 20px; }
+            .map-section { height: 300px; }
+            .scroll-to-top { width: 40px; height: 40px; }
+            button { padding: 8px 15px; font-size: 0.9em; }
+            .language-toggle button { padding: 8px 15px; font-size: 0.9em; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Noto+Sans+Sinhala&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body>
+    <div class="loader">
+        <div class="heart"></div>
+    </div>
+    <div class="language-toggle">
+        <button onclick="changeLanguage('en')">English</button>
+        <button onclick="changeLanguage('si')">සිංහල</button>
+        <button onclick="changeLanguage('ta')">தமிழ்</button>
+    </div>
+    <div class="container">
+        <div class="header">
+            <h1 id="title">Sanduni & Malith's Wedding</h1>
+            <p id="greeting">Dear Guest, With great joy, we invite you to celebrate our special day</p>
+        </div>
+        <div class="countdown">
+            <h2 id="countdown-title">Counting Down to Our Big Day</h2>
+            <p id="countdown">Calculating...</p>
+        </div>
+        <div class="invitation-details parallax">
+            <h2 id="couple-name">Sanduni & Malith</h2>
+            <p id="date">Sunday, 15th December 2025</p>
+            <p id="time">4:00 PM</p>
+            <p id="venue">Grand Ballroom, Cinnamon Grand Hotel, Colombo</p>
+            <p id="reception">Reception to follow</p>
+        </div>
+        <div class="timeline">
+            <h2 id="timeline-title">Wedding Day Timeline</h2>
+            <div class="timeline-events">
+                <div class="timeline-event"><i class="fas fa-ring"></i> 4:00 PM - Ceremony Begins</div>
+                <div class="timeline-event"><i class="fas fa-glass-cheers"></i> 5:30 PM - Cocktail Hour</div>
+                <div class="timeline-event"><i class="fas fa-utensils"></i> 6:00 PM - Reception & Dinner</div>
+                <div class="timeline-event"><i class="fas fa-dove"></i> 8:00 PM - First Dance</div>
+            </div>
+            <button onclick="addToCalendar()">Add to Google Calendar</button>
+        </div>
+        <div class="media-section">
+            <h2 id="media-title">Our Journey</h2>
+            <div class="slideshow-container">
+                <img class="slide" src="1.jpg" alt="Photo 1">
+                <img class="slide" src="2.jpg" alt="Photo 2">
+                <img class="slide" src="3.jpg" alt="Photo 3">
+            </div>
+            <audio id="background-music" loop>
+                <source src="https://via.placeholder.com/romantic.mp3" type="audio/mp3">
+            </audio>
+            <button onclick="toggleMusic()">Play/Pause Music</button>
+            <div class="video-container">
+                <video controls>
+                    <source src="1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="image-section">
+            <h2 id="image1-title">Memories</h2>
+            <img src="5.jpg" alt="Wedding Memory 1">
+        </div>
+        <div class="image-section">
+            <h2 id="image2-title">Moments</h2>
+            <img src="7.jpg" alt="Wedding Memory 2">
+        </div>
+        <div class="map-section">
+            <h2 id="map-title">Venue Location</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.902390948293!2d79.84867831477294!3d6.931834995000016!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25963b9210a0b%3A0x8701e6b3a5e43586!2sCinnamon%20Grand%20Colombo!5e0!3m2!1sen!2slk!4v1634567890123!5m2!1sen!2slk" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="social-share">
+            <h2 id="social-share-title">Share Our Joy</h2>
+            <a href="https://wa.me/?text=Join%20us%20at%20Sanduni%20%26%20Malith's%20Wedding!%20Visit:%20[Your-URL]" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=[Your-URL]" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://x.com/intent/tweet?text=Join%20us%20at%20Sanduni%20%26%20Malith's%20Wedding!%20[Your-URL]" target="_blank"><i class="fab fa-x"></i></a>
+        </div>
+    </div>
+    <div class="scroll-to-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    <script>
+        // Multilingual Support
+        const translations = {
+            en: {
+                title: "Sanduni & Malith's Wedding",
+                greeting: "Dear Guest, With great joy, we invite you to celebrate our special day",
+                countdown: "Counting Down to Our Big Day",
+                couple: "Sanduni & Malith",
+                date: "Sunday, 15th December 2025",
+                time: "4:00 PM",
+                venue: "Grand Ballroom, Cinnamon Grand Hotel, Colombo",
+                reception: "Reception to follow",
+                timeline: "Wedding Day Timeline",
+                media: "Our Journey",
+                image1: "Memories",
+                image2: "Moments",
+                map: "Venue Location",
+                share: "Share Our Joy"
+            },
+            si: {
+                title: "සඳුනි සහ මලිත්ගේ විවාහය",
+                greeting: "ආදරණීය අමුත්තා, අපගේ විශේෂ දිනය සැමරීමට ඔබට ආරාධනා කරමු",
+                countdown: "අපගේ විශේෂ දිනයට ගණන් කිරීම",
+                couple: "සඳුනි සහ මලිත්",
+                date: "2025 දෙසැම්බර් 15 වන ඉරිදා",
+                time: "පස්වරු 4:00",
+                venue: "කොළඹ සිනමන් ග්‍රෑන්ඩ් හෝටලය, ග්‍රෑන්ඩ් චෝල්රූම්",
+                reception: "පිළිගැනීම අනතුරුව",
+                timeline: "විවාහ දින ලේඛනය",
+                media: "අපගේ ගමන",
+                image1: "සිහින්",
+                image2: "මොහොත",
+                map: "ස්ථානය",
+                share: "අපගේ ප්‍රීතිය චෙදාගන්න"
+            },
+            ta: {
+                title: "சந்துனி & மலித் திருமணம்",
+                greeting: "அன்பு விருந்தினர், எங்கள் சிறப்பு நாளை கொண்டாட உங்களை அழைக்கிறோம்",
+                countdown: "எங்கள் பெரிய நாளுக்கு கவுண்டவுன்",
+                couple: "சந்துனி & மலித்",
+                date: "டிசம்பர் 15, 2025 ஞாயிறு",
+                time: "மாலை 4:00",
+                venue: "கொழும்பு சினமன் கிராண்ட் ஹோட்டல், கிராண்ட் பால்ரூம்",
+                reception: "பின்னர் வரவேற்பு",
+                timeline: "திருமண நாள் காலவரிசை",
+                media: "எங்கள் பயணம்",
+                image1: "நினைவுகள்",
+                image2: "நிமிடங்கள்",
+                map: "இடம்",
+                share: "எங்கள் மகிழ்ச்சியைப் பகிரவும்"
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.getElementById('title').innerText = translations[lang].title;
+            document.getElementById('greeting').innerText = translations[lang].greeting;
+            document.getElementById('countdown-title').innerText = translations[lang].countdown;
+            document.getElementById('couple-name').innerText = translations[lang].couple;
+            document.getElementById('date').innerText = translations[lang].date;
+            document.getElementById('time').innerText = translations[lang].time;
+            document.getElementById('venue').innerText = translations[lang].venue;
+            document.getElementById('reception').innerText = translations[lang].reception;
+            document.getElementById('timeline-title').innerText = translations[lang].timeline;
+            document.getElementById('media-title').innerText = translations[lang].media;
+            document.getElementById('image1-title').innerText = translations[lang].image1;
+            document.getElementById('image2-title').innerText = translations[lang].image2;
+            document.getElementById('map-title').innerText = translations[lang].map;
+            document.getElementById('social-share-title').innerText = translations[lang].share;
+        }
+
+        // Personalized Greeting
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestName = urlParams.get('guest') || 'Guest';
+        document.getElementById('greeting').innerText = `Dear ${guestName}, With great joy, we invite you to celebrate our special day`;
+
+        // Countdown Timer
+        function countdown() {
+            const weddingDate = new Date("Dec 15, 2025 16:00:00").getTime();
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("countdown").innerHTML = 
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = translations[currentLang].weddingStarted || "The Wedding Has Begun!";
+            }
+        }
+        setInterval(countdown, 1000);
+
+        // Slideshow
+        let slideIndex = 0;
+        const slides = document.getElementsByClassName("slide");
+        function showSlides() {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            slideIndex = (slideIndex + 1) % slides.length;
+            slides[slideIndex].classList.add("active");
+        }
+        setInterval(showSlides, 3000);
+        slides[0].classList.add("active");
+
+        // Background Music
+        const music = document.getElementById("background-music");
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+
+        // Scroll to Top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        window.addEventListener('scroll', () => {
+            const scrollToTopBtn = document.querySelector('.scroll-to-top');
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+
+        // Animate on Scroll
+        function animateOnScroll() {
+            const sections = document.querySelectorAll('.countdown, .invitation-details, .timeline, .media-section, .image-section, .map-section');
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top >= 0 && rect.top < window.innerHeight) {
+                    section.style.animation = 'fadeInScale 1.5s ease-in forwards';
+                }
+            });
+        }
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // Google Calendar Integration
+        function addToCalendar() {
+            const event = {
+                title: 'Sanduni & Malith\'s Wedding',
+                start: '2025-12-15T16:00:00+0530',
+                end: '2025-12-15T20:00:00+0530',
+                details: 'Join us for the wedding ceremony and reception at Cinnamon Grand Hotel, Colombo.',
+                location: 'Grand Ballroom, Cinnamon Grand Hotel, Colombo, Sri Lanka'
+            };
+            const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.start}/${event.end}&details=${encodeURIComponent(event.details)}&location=${encodeURIComponent(event.location)}&sf=true&output=xml`;
+            window.open(url, '_blank');
+        }
+
+        // Initialize Language
+        let currentLang = 'en';
+        changeLanguage(currentLang);
+    </script>
+</body>
+</html>
