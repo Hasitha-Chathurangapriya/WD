@@ -34,6 +34,8 @@
         }
         .header {
             padding: 20px;
+            position: relative;
+            overflow: visible;
         }
         h1 {
             font-size: 3.5em;
@@ -43,30 +45,36 @@
         }
         .language-toggle {
             position: absolute;
-            top: 20px;
+            top: -10px;
             right: 20px;
             z-index: 2;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            border-radius: 15px;
         }
         .language-toggle button {
-            padding: 10px 20px;
+            padding: 8px 15px;
             margin: 5px;
             background: #d81b60;
             color: white;
             border: none;
-            border-radius: 25px;
+            border-radius: 20px;
             cursor: pointer;
             transition: background 0.3s, transform 0.2s;
             font-family: 'Arial', sans-serif;
-            font-size: 1em;
+            font-size: 0.9em;
         }
         .language-toggle button:hover {
             background: #b01750;
             transform: scale(1.05);
         }
-        .countdown, .invitation-details, .timeline, .media-section, .image-section, .map-section {
-            margin: 40px 0;
+        .countdown, .invitation-details, .timeline, .media-section, .image-section, .map-section, .gallery-section {
+            margin: 50px 0; /* Increased margin to prevent overlap */
+            position: relative;
+            z-index: 1;
         }
-        .countdown h2, .invitation-details h2, .timeline h2, .media-section h2, .image-section h2, .map-section h2 {
+        .countdown h2, .invitation-details h2, .timeline h2, .media-section h2, .image-section h2, .map-section h2, .gallery-section h2 {
             font-size: 2em;
             color: #d81b60;
             animation: fadeInScale 1.5s ease-in;
@@ -169,7 +177,8 @@
         }
         .image-section {
             position: relative;
-            height: 300px;
+            height: auto; /* Changed from 300px to auto for flexibility */
+            padding: 20px 0;
         }
         .image-section img {
             max-width: 100%;
@@ -179,6 +188,7 @@
         }
         .map-section {
             height: 400px;
+            padding: 20px 0;
         }
         .map-section iframe {
             width: 100%;
@@ -212,6 +222,93 @@
         .scroll-to-top i {
             font-size: 1.5em;
         }
+        .video-container {
+            position: relative;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .video-container video {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            background: #000;
+        }
+        .gallery-section {
+            margin: 50px 0;
+            padding: 20px 0;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 0 20px;
+        }
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: relative;
+        }
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .gallery-item .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            font-size: 0.9em;
+        }
+        .gallery-item:hover .caption {
+            transform: translateY(0);
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+        .lightbox .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -232,14 +329,35 @@
             50% { transform: rotate(-45deg) scale(1.2); }
             100% { transform: rotate(-45deg) scale(1); }
         }
-        @media (max-width: 600px) {
+        @media (max-width: 1024px) {
+            h1 { font-size: 2.5em; }
+            .countdown h2, .invitation-details h2, .timeline h2, .media-section h2, .image-section h2, .map-section h2, .gallery-section h2 { font-size: 1.8em; }
+            .timeline-event { width: 250px; padding: 12px 20px; }
+            .map-section { height: 350px; }
+            .video-container { max-width: 500px; }
+            .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+            .language-toggle { top: -5px; }
+        }
+        @media (max-width: 768px) {
             h1 { font-size: 2em; }
-            .countdown, .invitation-details, .timeline, .media-section, .image-section, .map-section { font-size: 0.9em; }
-            .timeline-event { width: 200px; padding: 10px 20px; }
+            .countdown h2, .invitation-details h2, .timeline h2, .media-section h2, .image-section h2, .map-section h2, .gallery-section h2 { font-size: 1.5em; }
+            .timeline-event { width: 200px; padding: 10px 15px; }
             .map-section { height: 300px; }
+            .video-container { max-width: 400px; }
+            .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+            .language-toggle { top: 0; right: 10px; }
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8em; }
+            .countdown h2, .invitation-details h2, .timeline h2, .media-section h2, .image-section h2, .map-section h2, .gallery-section h2 { font-size: 1.2em; }
+            .timeline-event { width: 180px; padding: 8px 12px; }
+            .map-section { height: 250px; }
+            .video-container { max-width: 100%; }
+            .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+            button { padding: 6px 12px; font-size: 0.9em; }
+            .language-toggle button { padding: 6px 10px; font-size: 0.8em; }
+            .language-toggle { top: 5px; right: 5px; }
             .scroll-to-top { width: 40px; height: 40px; }
-            button { padding: 8px 15px; font-size: 0.9em; }
-            .language-toggle button { padding: 8px 15px; font-size: 0.9em; }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Noto+Sans+Sinhala&display=swap" rel="stylesheet">
@@ -249,11 +367,11 @@
     <div class="loader">
         <div class="heart"></div>
     </div>
-    <div class="language-toggle">
+    <!-- <div class="language-toggle">
         <button onclick="changeLanguage('en')">English</button>
         <button onclick="changeLanguage('si')">සිංහල</button>
         <button onclick="changeLanguage('ta')">தமிழ்</button>
-    </div>
+    </div> -->
     <div class="container">
         <div class="header">
             <h1 id="title">Sanduni & Malith's Wedding</h1>
@@ -292,9 +410,9 @@
             </audio>
             <button onclick="toggleMusic()">Play/Pause Music</button>
             <div class="video-container">
-                <video controls>
+                <video controls autoplay muted poster="https://via.placeholder.com/600x400?text=Video+Poster">
                     <source src="1.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
+                    Your browser does not support the video tag. <a href="1.mp4">Click here to download the video</a>.
                 </video>
             </div>
         </div>
@@ -310,6 +428,16 @@
             <h2 id="map-title">Venue Location</h2>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.902390948293!2d79.84867831477294!3d6.931834995000016!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25963b9210a0b%3A0x8701e6b3a5e43586!2sCinnamon%20Grand%20Colombo!5e0!3m2!1sen!2slk!4v1634567890123!5m2!1sen!2slk" allowfullscreen="" loading="lazy"></iframe>
         </div>
+        <div class="gallery-section">
+            <h2 id="gallery-title">Photo Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="1.jpg" alt="Gallery Image 1" onclick="openLightbox(this)"><div class="caption">Pre-Wedding Moment</div></div>
+                <div class="gallery-item"><img src="2.jpg" alt="Gallery Image 2" onclick="openLightbox(this)"><div class="caption">Engagement Day</div></div>
+                <div class="gallery-item"><img src="3.jpg" alt="Gallery Image 3" onclick="openLightbox(this)"><div class="caption">Family Gathering</div></div>
+                <div class="gallery-item"><img src="5.jpg" alt="Gallery Image 4" onclick="openLightbox(this)"><div class="caption">Wedding Prep</div></div>
+                <div class="gallery-item"><img src="7.jpg" alt="Gallery Image 5" onclick="openLightbox(this)"><div class="caption">Special Memory</div></div>
+            </div>
+        </div>
         <div class="social-share">
             <h2 id="social-share-title">Share Our Joy</h2>
             <a href="https://wa.me/?text=Join%20us%20at%20Sanduni%20%26%20Malith's%20Wedding!%20Visit:%20[Your-URL]" target="_blank"><i class="fab fa-whatsapp"></i></a>
@@ -319,6 +447,10 @@
     </div>
     <div class="scroll-to-top" onclick="scrollToTop()">
         <i class="fas fa-arrow-up"></i>
+    </div>
+    <div class="lightbox" onclick="closeLightbox()">
+        <span class="close">&times;</span>
+        <img src="" alt="Lightbox Image">
     </div>
     <script>
         // Multilingual Support
@@ -337,6 +469,7 @@
                 image1: "Memories",
                 image2: "Moments",
                 map: "Venue Location",
+                gallery: "Photo Gallery",
                 share: "Share Our Joy"
             },
             si: {
@@ -353,6 +486,7 @@
                 image1: "සිහින්",
                 image2: "මොහොත",
                 map: "ස්ථානය",
+                gallery: "ඡායාරූප එකතුව",
                 share: "අපගේ ප්‍රීතිය චෙදාගන්න"
             },
             ta: {
@@ -369,6 +503,7 @@
                 image1: "நினைவுகள்",
                 image2: "நிமிடங்கள்",
                 map: "இடம்",
+                gallery: "புகைப்படக் காட்சியகம்",
                 share: "எங்கள் மகிழ்ச்சியைப் பகிரவும்"
             }
         };
@@ -387,6 +522,7 @@
             document.getElementById('image1-title').innerText = translations[lang].image1;
             document.getElementById('image2-title').innerText = translations[lang].image2;
             document.getElementById('map-title').innerText = translations[lang].map;
+            document.getElementById('gallery-title').innerText = translations[lang].gallery;
             document.getElementById('social-share-title').innerText = translations[lang].share;
         }
 
@@ -450,11 +586,21 @@
 
         // Animate on Scroll
         function animateOnScroll() {
-            const sections = document.querySelectorAll('.countdown, .invitation-details, .timeline, .media-section, .image-section, .map-section');
+            const sections = document.querySelectorAll('.countdown, .invitation-details, .timeline, .media-section, .image-section, .map-section, .gallery-section');
             sections.forEach(section => {
                 const rect = section.getBoundingClientRect();
                 if (rect.top >= 0 && rect.top < window.innerHeight) {
                     section.style.animation = 'fadeInScale 1.5s ease-in forwards';
+                }
+                if (section.classList.contains('gallery-section')) {
+                    const items = section.querySelectorAll('.gallery-item');
+                    items.forEach((item, index) => {
+                        if (rect.top + rect.height * 0.7 > 0 && rect.top < window.innerHeight) {
+                            setTimeout(() => {
+                                item.classList.add('visible');
+                            }, index * 200);
+                        }
+                    });
                 }
             });
         }
@@ -472,6 +618,17 @@
             };
             const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.start}/${event.end}&details=${encodeURIComponent(event.details)}&location=${encodeURIComponent(event.location)}&sf=true&output=xml`;
             window.open(url, '_blank');
+        }
+
+        // Lightbox for Gallery
+        let lightbox = document.querySelector('.lightbox');
+        let lightboxImg = document.querySelector('.lightbox img');
+        function openLightbox(element) {
+            lightbox.classList.add('active');
+            lightboxImg.src = element.src;
+        }
+        function closeLightbox() {
+            lightbox.classList.remove('active');
         }
 
         // Initialize Language
